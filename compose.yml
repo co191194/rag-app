@@ -5,5 +5,22 @@ services:
       - .:/app
     env_file:
       - .env
-    # コンテナを起動したままにするダミーコマンド
-    command: ["tail", "-f", "/dev/null"]
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db
+    
+  db:
+    # pgvectorが最初からインストールされているイメージを使用
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: rag_user
+      POSTGRES_PASSWORD: rag_password
+      POSTGRES_DB: rag_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

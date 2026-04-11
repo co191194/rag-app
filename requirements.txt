@@ -1,3 +1,5 @@
 openai
 python-dotenv
 pypdf
+psycopg[binary] # PostgreSQL接続用ドライバ
+pgvector # pgvectorのPythonバインディング
