@@ -1,10 +1,10 @@
 services:
-  app:
-    build: .
+  backend:
+    build: ./backend
     volumes:
-      - .:/app
+      - ./backend:/app
     env_file:
-      - .env
+      - ./backend/.env
     ports:
       - "8000:8000"
     depends_on:
