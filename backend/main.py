@@ -6,10 +6,19 @@ from pgvector.psycopg import register_vector
 from openai import OpenAI
 from pypdf import PdfReader
 import io
+from fastapi.middleware.cors import CORSMiddleware
 
 
 # FastAPIアプリケーションの初期化
 app = FastAPI(title="社内ドキュメントRAG API", version="1.0.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # フロントエンドのURLを指定
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # OpenAIクライアントの初期化
 client = OpenAI()
 
