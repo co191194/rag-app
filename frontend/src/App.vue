@@ -48,6 +48,14 @@ const handleUpload = async (event: Event) => {
   }
 };
 
+const keydownHandler = (event: KeyboardEvent) => {
+  if (event.isComposing) return; // 日本語入力中は無視
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendQuery();
+  }
+};
+
 const sendQuery = async () => {
   if (!query.value.trim()) return;
 
@@ -119,7 +127,11 @@ const sendQuery = async () => {
         </ScrollArea>
 
         <div class="p-4 border-t flex gap-2">
-          <Input v-model="query" placeholder="質問を入力してください..." />
+          <Input
+            v-model="query"
+            placeholder="質問を入力してください..."
+            @keydown="keydownHandler"
+          />
           <Button @click="sendQuery" :disabled="isLoading">送信</Button>
         </div>
       </Card>
